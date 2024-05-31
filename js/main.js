@@ -8,25 +8,25 @@ const turnos = [];
 let idCounter = 0;
 const servicios = ["Baño y Peinado", "Vacunación", "Eliminación de Pulgas"];
 
-// Función para mostrar mensajes en la consola
+// Función mensajes consola
 const mensajeConsola = (mensaje) => console.log(mensaje);
 
-// Función para mostrar mensaje de despedida
+// Función mensaje despedida
 const mensajeDespedida = () => console.log('Gracias y hasta luego 🖐️');
 
-// Función para generar IDs únicos
+// Función IDs unívocos
 const generarID = () => `_${idCounter++}`;
 
 // Bienvenida e ingreso de datos
 const ingresarDatosUsuario = () => {
     mensajeConsola('\n\n\n\n\n\n\n\n\n\n_\n\n');
     mensajeConsola("🐶 ¡Bienvenido a la Veterinaria Felina! 🐱");
-    const nombreUsuario = prompt("👤 Hola, ¿cómo te llamás?:");
+    const nombreUsuario = prompt("👤 Hola, ¿cómo te llamás? 👤:");
     if (nombreUsuario === null) {
         mensajeDespedida();
         return null;
     }
-    const telefonoUsuario = prompt("📞 Por favor, ingresá tu teléfono:");
+    const telefonoUsuario = prompt("📞 Por favor, ingresá tu teléfono 📞:");
     if (telefonoUsuario === null) {
         mensajeDespedida();
         return null;
@@ -44,16 +44,16 @@ const ingresarDatosUsuario = () => {
 const ingresoDatosMascotas = (idUsuario) => {
     const cantidadMascotas = parseInt(prompt("🐾 ¿Cuántas mascotas querés llevar a la veterinaria?"));
     if (isNaN(cantidadMascotas)) {
-        mensajeConsola("Pusiste una cantidad de mascotas no válida 😊");
+        mensajeConsola("😊 Pusiste una cantidad de mascotas no válida 😊");
         return;
     }
     for (let i = 0; i < cantidadMascotas; i++) {
-        const nombreMascota = prompt(`🐕 Ingresá el nombre de la mascota ${i + 1}:`);
+        const nombreMascota = prompt(`🐕 Ingresá el nombre de la mascota ${i + 1} 🐕:`);
         if (nombreMascota === null) {
             mensajeDespedida();
             return;
         }
-        const edadMascota = prompt(`📅 Ingresá la edad de ${nombreMascota}:`);
+        const edadMascota = prompt(`📅 Ingresá la edad de ${nombreMascota} 📅:`);
         if (edadMascota === null) {
             mensajeDespedida();
             return;
@@ -77,12 +77,12 @@ const ingresarTurnos = (idUsuario) => {
                 mensajeDespedida();
                 return;
             }
-            const fechaTurno = prompt(`📅 Ingresá la fecha del turno para ${mascota.nombre} (dd/mm/aaaa):`);
+            const fechaTurno = prompt(`📅 Ingresá la fecha del turno para ${mascota.nombre} (dd/mm/aaaa)📅:`);
             if (fechaTurno === null) {
                 mensajeDespedida();
                 return;
             }
-            const horaTurno = prompt(`🕒 Ingresá la hora del turno para ${mascota.nombre} (HH:MM):`);
+            const horaTurno = prompt(`🕒 Ingresá la hora del turno para ${mascota.nombre} (HH:MM) 🕒:`);
             if (horaTurno === null) {
                 mensajeDespedida();
                 return;
@@ -99,11 +99,11 @@ const ingresarTurnos = (idUsuario) => {
     });
 };
 
-// Elección de servicio por parte del usuario
+// Elije el servicio el usuario
 const elegirServicio = (nombreMascota) => {
     let servicioElegido = null;
     while (servicioElegido === null) {
-        const opcionServicio = prompt(`¿Qué servicio necesita ${nombreMascota}?\n1. Baño y Peinado\n2. Vacunación\n3. Eliminación de Pulgas\nElige una opción:`);
+        const opcionServicio = prompt(`¿Qué servicio necesita ${nombreMascota}?\n1. 🛁Baño y Peinado\n2. 💉Vacunación\n3. 🪲Eliminación de Pulgas\nElige una opción:`);
         if (opcionServicio === null) {
             return null;
         }
