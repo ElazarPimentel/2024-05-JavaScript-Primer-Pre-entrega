@@ -120,7 +120,7 @@ const ingresarTurnos = function (idUsuario) { //Función expresada
 const elegirServicio = (nombreMascota) => {
     let servicioElegido = null;
     while (servicioElegido === null) {
-        const opcionServicio = prompt(`¿Qué servicio desea ${nombreMascota}?\n1. 🛁Baño y Peinado\n2. 💉Vacunación\n3. 🪲Eliminación de Pulgas\nElige una opción:`);
+        const opcionServicio = prompt(`¿Qué servicio deseás ${nombreMascota}?\n1. 🛁Baño y Peinado\n2. 💉Vacunación\n3. 🪲Eliminación de Pulgas\nElige una opción:`);
         if (opcionServicio === null) {
             return null;
         }
@@ -146,16 +146,16 @@ const mostrarMenu = (idUsuario) => {
     const menu = `
 🐾 Menú de la Veterinaria 🐾
 1. 🐕 Dar de alta nueva mascota 🐕
-2. 🐾 Ver mascotas ingresadas 🐾
-3. 📅 Solicitar turno para una mascota 📅
-4. 📝 Modificar turno de una mascota 📝
-5. 🗑️ Eliminar turno de una mascota 🗑️
+2. 🐾 Ver turnos para las mascotas 🐾
+3. 📅 Solicitar turno para tu mascota 📅
+4. 📝 Modificar turno de tu mascota 📝
+5. 🗑️ Eliminar turno de tu mascota 🗑️
 6. 🖐️ Salir 🖐️
 `;
     opcion = prompt(menu + '\n😊 Por favor elegí una de estas opciones: 1, 2, 3, 4, 5, 6 😊');
     if (opcion === null) {
         mensajeDespedida();
-        return false; // Especifica que se salió del menú.
+        return false; // Salió del menu, presinó cancelar
     }
 
     switch (opcion) {
@@ -176,12 +176,12 @@ const mostrarMenu = (idUsuario) => {
             break;
         case '6':
             mensajeDespedida();
-            return false; // Indica que se ha salido del menú.
+            return false; // Salir.
         default:
             alert('😊 Por favor ingresá uno de los números de las opciones 😊');
             break;
     }
-    return true; // Indica que se debe continuar mostrando el menú.
+    return true; // Continuar mostrando el menú de opciones
 };
 
 // Mascotas del usuario
@@ -196,7 +196,7 @@ const mostrarMascotas = (idUsuario) => {
         const turno = turnos.find(turno => turno.idMascota === mascotaDelUsuario.id) || {};
         return `Para ${mascotaDelUsuario.nombre} tenés un turno el ${turno.fecha} a las ${turno.hora} para un ${turno.servicio}`;
     });
-    alert('Turnos de tu mascota: ' + datosAMostrar.join('\n'));
+    alert('Los trurnos a tu nombre son ' + datosAMostrar.join('\n'));
 };
 
 // Turnos del usuario
@@ -214,7 +214,7 @@ const mostrarTurnos = (idUsuario) => {
         return `Para ${mascotaDelUsuario.nombre} tenés un turno el ${turno.fecha} a las ${turno.hora} para un ${turno.servicio}`;
     });
 
-    alert('Turnos registrados: ' + datosAMostrar.join('\n'));
+    alert('Los turnos a tu nombre son\n ' + datosAMostrar.join('\n'));
 };
 
 // Modificar un turno
@@ -246,9 +246,9 @@ const modificarTurno = (idUsuario) => {
         turno.fecha = nuevaFecha; //Nop-si
         turno.hora = nuevaHora;
         turno.servicio = nuevoServicio;
-        alert("😊 📝 Tu turno fue modificado 😊 📝");
+        alert("😊 📝 El turno fue modificado 😊 📝");
     } else {
-        alert("😊 Tu turno no fue encontrado, por favor revisá tu respuesta 😊");
+        alert("😊 El turno no fue encontrado, por favor revisá tu respuesta 😊");
     }
 };
 
@@ -275,8 +275,8 @@ if (idUsuario !== null) {
     ingresoDatosMascotas(idUsuario); // Llenamos los datos de las mascotitas pasando el ID del usuario. 
     ingresarTurnos(idUsuario); // llenamos los datos referente a la fecha y hora llevando el ID del usuario. 
 
-    //let continuar = true; //sacar
-    //alert('No usamos while true')
+    
+    //No usamos while true ;)
     continuar = mostrarMenu(idUsuario); //  Para no forzar un while true que un profe en la facu me traumatizó
     while (continuar) {
         continuar = mostrarMenu(idUsuario); // Controla el flujo en función de la elección del usuario o si decide salir.
