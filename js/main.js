@@ -7,8 +7,7 @@ const mascotas = [];
 const turnos = [];
 const servicios = ["Baño y Peinado", "Vacunación", "Eliminación de Pulgas"];
 
-
-// Inicialización de variables (No hace falta mas por lo que leí no hace daño y para el futuro puede ayudar si se usa un entorno de tipos)
+// Inicialización de variables
 let idCounter = 0;
 let cantidadMascotas = 0;
 let servicio = "";
@@ -24,9 +23,7 @@ let nuevaFecha = "";
 let nuevaHora = "";
 let nuevoServicio = "";
 
-
-
-// Función mensaje despedida porque se repite mucho
+// Función mensaje despedida
 const mensajeDespedida = () => alert('🖐️ Gracias y hasta luego 🖐️'); // Función arrow. Aparte, en una reciente capacitación nos dijeron que la gente ama emojies.
 
 // Función que genera ID's unívocos
@@ -34,7 +31,7 @@ const generarID = () => idCounter++;
 
 // Bienvenida e ingreso de datos
 function ingresarDatosUsuario() { //Función Declarada
-    nombreUsuario = prompt("🐶 ¡Bienvenido a la Veterinaria La Pata Patagonia! 🐱\n👤 Hola, ¿cómo te llamás? 👤:");
+    nombreUsuario = prompt("🐶 ¡Bienvenido a la Veterinaria Pata-pata-gonica! 🐱\n👤 Hola, ¿cómo te llamás? 👤:");
     if (nombreUsuario === null) {
         mensajeDespedida();
         return null;
@@ -45,13 +42,13 @@ function ingresarDatosUsuario() { //Función Declarada
         return null;
     }
     const usuario = { // Objeto literal
-        id: generarID(),
+        id: generarID(), // Generación de ID para usuario
         nombre: nombreUsuario,
         telefono: telefonoUsuario
     };
-    usuarios.push(usuario);
-    
-    return usuario.id;
+    usuarios.push(usuario); // Agregamos los datos
+
+    return usuario.id; //retorna el ID para que 
 }
 
 // Ingreso de datos de las mascotas
@@ -73,19 +70,19 @@ const ingresoDatosMascotas = (idUsuario) => {
             return;
         }
         const mascota = {
-            id: generarID(),
+            id: generarID(), // Generamos ID para cada mascota
             idUsuario,
             nombre: nombreMascota,
             edad: edadMascota
         };
-        mascotas.push(mascota);
-        //alert('Mascota registrada: ' + JSON.stringify(mascota)); // Depuración
+        mascotas.push(mascota); //Inicializado arriba, el scope supera ingresoDatosMascotas
     }
 };
 
 // Registro de turnos para cada mascota
-const ingresarTurnos = function (idUsuario) { //Función expresada
-    mascotas.forEach(function (mascota) {
+const ingresarTurnos = (idUsuario) => {
+    for (let i = 0; i < mascotas.length; i++) {
+        const mascota = mascotas[i];
         if (mascota.idUsuario === idUsuario) {
             servicio = elegirServicio(mascota.nombre);
             if (servicio === null) {
@@ -102,19 +99,17 @@ const ingresarTurnos = function (idUsuario) { //Función expresada
                 mensajeDespedida();
                 return;
             }
-            const turno = {
-                id: generarID(),
+            const turno = { // Guardamos los prompt del usuario en un objeto literal
+                id: generarID(), //Llamamos a generar ID para cada turno
                 idMascota: mascota.id,
                 fecha: fechaTurno,
                 hora: horaTurno,
                 servicio
             };
             turnos.push(turno);
-            //alert('Turno registrado: ' + JSON.stringify(turno)); // Depuración
         }
-    });
+    }
 };
-
 
 // Elije el servicio el usuario
 const elegirServicio = (nombreMascota) => {
@@ -126,7 +121,7 @@ const elegirServicio = (nombreMascota) => {
         }
         switch (opcionServicio) { // Usamos el valor de ésta variable como índice de servicios para opciones. 
             case '1':
-                servicioElegido = servicios[0]; 
+                servicioElegido = servicios[0];
                 break;
             case '2':
                 servicioElegido = servicios[1];
@@ -192,11 +187,13 @@ const mostrarMascotas = (idUsuario) => {
             mascotasUsuario.push(mascota);
         }
     }
-    const datosAMostrar = mascotasUsuario.map(mascotaDelUsuario => {
+    let datosAMostrar = ''; // Inicialización de variable para concatenar strings
+    for (let i = 0; i < mascotasUsuario.length; i++) {
+        const mascotaDelUsuario = mascotasUsuario[i];
         const turno = turnos.find(turno => turno.idMascota === mascotaDelUsuario.id) || {};
-        return `Para ${mascotaDelUsuario.nombre} tenés un turno el ${turno.fecha} a las ${turno.hora} para un ${turno.servicio}`;
-    });
-    alert('Los trurnos a tu nombre son ' + datosAMostrar.join('\n'));
+        datosAMostrar += `Para ${mascotaDelUsuario.nombre} tenés un turno el ${turno.fecha} a las ${turno.hora} para un ${turno.servicio}\n`;
+    }
+    alert('Los turnos a tu nombre son ' + datosAMostrar);
 };
 
 // Turnos del usuario
@@ -209,23 +206,25 @@ const mostrarTurnos = (idUsuario) => {
         }
     }
 
-    const datosAMostrar = turnosUsuario.map(turno => {
+    let datosAMostrar = ''; // Inicialización de variable para concatenar strings
+    for (let i = 0; i < turnosUsuario.length; i++) {
+        const turno = turnosUsuario[i];
         const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota);
-        return `Para ${mascotaDelUsuario.nombre} tenés un turno el ${turno.fecha} a las ${turno.hora} para un ${turno.servicio}`;
-    });
+        datosAMostrar += `Para ${mascotaDelUsuario.nombre} tenés un turno número ${mascotaDelUsuario.id} el ${turno.fecha} a las ${turno.hora} para un ${turno.servicio}\n`;
+    }
 
-    alert('Los turnos a tu nombre son\n ' + datosAMostrar.join('\n'));
+    alert('Los turnos a tu nombre son\n ' + datosAMostrar);
 };
 
 // Modificar un turno
 const modificarTurno = (idUsuario) => {
     mostrarTurnos(idUsuario);
-    idTurno = prompt("📝 Ingresá el ID del turno que querés modificar: 📝");
+    idTurno = prompt("📝 Ingresá número de turno que querés modificar: 📝");
     if (idTurno === null) {
         mensajeDespedida();
         return;
     }
-    const turno = turnos.find(t => t.id === idTurno);
+    const turno = turnos.find(turno => turno.id === idTurno);
     if (turno) {
         nuevaFecha = prompt("📅 Ingresá la nueva fecha (dd/mm/aaaa): 📅");
         if (nuevaFecha === null) {
@@ -248,37 +247,36 @@ const modificarTurno = (idUsuario) => {
         turno.servicio = nuevoServicio;
         alert("😊 📝 El turno fue modificado 😊 📝");
     } else {
-        alert("😊 El turno no fue encontrado, por favor revisá tu respuesta 😊");
+        alert("😊 El número de turno no fue encontrado, por favor revisá tu respuesta 😊");
     }
 };
 
 // Eliminar un turno
 const eliminarTurno = (idUsuario) => {
     mostrarTurnos(idUsuario);
-    idTurno = prompt("🗑️ Ingresá el ID del turno que querés eliminar: 🗑️");
+    idTurno = prompt("🗑️ Ingresá número del turno que querés eliminar: 🗑️");
     if (idTurno === null) {
         mensajeDespedida();
         return;
     }
-    const index = turnos.findIndex(t => t.id === idTurno);
+    const index = turnos.findIndex(turno => turno.id === idTurno);
     if (index !== -1) {
         turnos.splice(index, 1);
-        alert("🗑️ Tu turno feu eliminado correctamente 🗑️");
+        alert("🗑️ Tu turno fue eliminado con éxito 🗑️");
     } else {
-        alert("😊 Oops! hubo un error en el número que ingresaste 😊");
+        alert("😊 Oops! hubo un error en el número de turno que ingresaste no fue encontrado 😊");
     }
 };
 
 // Inicio del programa - Ciclo del menú del usuario
 const idUsuario = ingresarDatosUsuario(); // Traemos el ID del usuario y llenamos el objeto literal del usuario
-if (idUsuario !== null) {
+if (idUsuario !== null) { //si no puse cancelar
     ingresoDatosMascotas(idUsuario); // Llenamos los datos de las mascotitas pasando el ID del usuario. 
-    ingresarTurnos(idUsuario); // llenamos los datos referente a la fecha y hora llevando el ID del usuario. 
+    ingresarTurnos(idUsuario); // llenamos los datos referente a la fecha y hora mandamos el ID del usuario. 
 
-    
     //No usamos while true ;)
     continuar = mostrarMenu(idUsuario); //  Para no forzar un while true que un profe en la facu me traumatizó
-    while (continuar) {
+    while (continuar) { // while true 
         continuar = mostrarMenu(idUsuario); // Controla el flujo en función de la elección del usuario o si decide salir.
     }
 }
