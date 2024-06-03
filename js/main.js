@@ -5,11 +5,11 @@
 const usuarios = [];
 const mascotas = [];
 const turnos = [];
-const servicios = ["Baño y Peinado", "Vacunación", "Eliminación de Pulgas"];
+const servicios = ["Baño y Peinado", "Vacunación", "Eliminación de Pulgas"]; // Primer array
 
 // Inicialización de variables
-let idCounter = 0;
-let servicio = "";
+let idCounter = 0; //Primer variable numérica
+let servicio = ""; // Primer variable string
 let nombreUsuario = "";
 let telefonoUsuario = "";
 let nombreMascota = "";
@@ -22,14 +22,14 @@ let nuevaFecha = "";
 let nuevaHora = "";
 let nuevoServicio = "";
 
-// Función mensaje despedida
+// Función mensage despedida
 const mensajeDespedida = () => alert('🖐️ Gracias y hasta luego 🖐️'); // Función arrow. En una reciente capacitación nos dijeron que la gente ama emojies.
 
 // Función que genera ID's unívocos
 const generarID = () => idCounter++;
 
 // Bienvenida e ingreso de datos. Se llama del bucle de control de todo el programa.
-function ingresarDatosUsuario() {
+function ingresarDatosUsuario() { //Funcion declarativa
     
     nombreUsuario = prompt("🐶 ¡Bienvenido a la Veterinaria Pata-pata-gonica! 🐱\n👤 Hola, ¿cómo te llamás? 👤:");
     if (nombreUsuario === null) {
@@ -46,20 +46,20 @@ function ingresarDatosUsuario() {
         nombreUsuario,
         telefonoUsuario
     };
-    usuarios.push(usuario);
+    usuarios.push(usuario);// Primer push
 
     return usuario.id;
 }
 
 // Ingreso de datos de las mascotas y sus turnos
-const ingresoDatosMascotasYTurnos = (idUsuario) => {
+const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
     
     const cantidadNuevaMascotas = parseInt(prompt("🐾 ¿Cuántas mascotas querés traer a la veterinaria? 🐾"));
     if (isNaN(cantidadNuevaMascotas)) {
         alert("😊 por favor usá un número válido de mascotas 😊");
         return;
     }
-    for (let i = 0; i < cantidadNuevaMascotas; i++) {
+    for (let i = 0; i < cantidadNuevaMascotas; i++) {//Primer for
         nombreMascota = prompt(`🐕 ¿Cómo se llama la mascota ${i + 1}? 🐕:`);
         if (nombreMascota === null) {
             mensajeDespedida();
@@ -70,7 +70,7 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => {
             mensajeDespedida();
             return;
         }
-        const mascota = {
+        const mascota = { //Objeto literal
             id: generarID(),
             idUsuario,
             nombreMascota,
@@ -109,7 +109,7 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => {
 // Elije el servicio el usuario
 const elegirServicio = (nombreMascota) => {
     let servicioElegido = null;
-    while (servicioElegido === null) {
+    while (servicioElegido === null) { //Primer while
         const opcionServicio = prompt(`¿Qué servicio deseás para ${nombreMascota}?\n1. 🛁Baño y Peinado\n2. 💉Vacunación\n3. 🪲Eliminación de Pulgas\nElige una opción:`);
         if (opcionServicio === null) {
             return null;
@@ -131,7 +131,7 @@ const elegirServicio = (nombreMascota) => {
     return servicioElegido;
 };
 
-// Menú y selección de opción por parte del usuario
+// Menú principal y selección de opciones
 const mostrarMenu = (idUsuario) => {
     const menu = `
 🐾 Menú de la Veterinaria 🐾
@@ -180,7 +180,7 @@ const mostrarMenu = (idUsuario) => {
 const mostrarMascotas = (idUsuario) => {
 
 
-    const mascotasUsuario = [];
+    const mascotasUsuario = [];//Mascotas por ID usuario actual
     for (const mascota of mascotas) {
         if (mascota.idUsuario === idUsuario) {
             mascotasUsuario.push(mascota);
@@ -203,7 +203,8 @@ const mostrarMascotas = (idUsuario) => {
 // Turnos del usuario
 const mostrarTurnos = (idUsuario) => {
     const turnosUsuario = [];
-    for (const turno of turnos) {
+
+    for (const turno of turnos) {//Find turnos mascotas ID Usuario
         const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota);
         if (mascotaDelUsuario && mascotaDelUsuario.idUsuario === idUsuario) {
             turnosUsuario.push(turno);
@@ -282,6 +283,6 @@ if (idUsuario !== null) { //if not true
 
     continuar = mostrarMenu(idUsuario);
     while (continuar) {
-        continuar = mostrarMenu(idUsuario);
+        continuar = mostrarMenu(idUsuario); //Si continuar true Mostrar Menú principal
     }
 }
