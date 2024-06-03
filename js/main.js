@@ -193,7 +193,7 @@ const mostrarMascotas = (idUsuario) => {
         const mascotaDelUsuario = mascotasUsuario[i];
         const turno = turnos.find(turno => turno.idMascota === mascotaDelUsuario.id) || {};
         if (turno.fechaTurno) {
-            datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés un turno el ${turno.fechaTurno} a las ${turno.horaTurno} para un ${turno.servicio}\n`;
+            datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés un turno el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
         }
     }
     alert(`Los turnos a tu nombre son:\n ${datosAMostrar}`);
@@ -214,7 +214,7 @@ const mostrarTurnos = (idUsuario) => {
     for (let i = 0; i < turnosUsuario.length; i++) {
         const turno = turnosUsuario[i];
         const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota);
-        datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés el turno número *${turno.id}* el ${turno.fechaTurno} a las ${turno.horaTurno} para un ${turno.servicio}\n`;
+        datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés el turno número *${turno.id}* el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
     }
 
     alert(`${nombreUsuario} los turnos a tu nombre son:\n ${datosAMostrar} y te vamos a avisar al número de teléfono ${telefonoUsuario}`);
