@@ -1,6 +1,6 @@
 // Nombre del archivo: main.js
 // Alessio Aguirre Pimentel
-// v4
+// v5
 
 // Inicialización de arrays vacíos
 const usuarios = [],
@@ -35,7 +35,7 @@ const generarID = () => idCounter++; //IDs general
 const generarTurnoID = () => idTurnoCounter++; // ID de turnos para que sean consecutivos (antes usaba generarID para todo)
 
 // Bienvenida e ingreso de datos. Se llama del bucle de control de todo el programa al final del código.
-function ingresarDatosUsuario() { //Función declarativa
+function ingresarDatosUsuario() { //Funcion declarativa
 
     nombreUsuario = prompt("🐶 ¡Bienvenido a la Veterinaria Pata-pata-gonica! 🐱\n👤 Hola, ¿cómo te llamás? 👤:");
     if (nombreUsuario === null) {
@@ -220,7 +220,7 @@ const mostrarTurnos = (idUsuario) => {
     for (let i = 0; i < turnosUsuario.length; i++) {
         const turno = turnosUsuario[i];
         const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota);
-        datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés el turno número *${turno.id}* el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
+        datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés el turno número *${turno.id + 1}* el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
     }
 
     alert(`${nombreUsuario} los turnos a tu nombre son:\n ${datosAMostrar} y te vamos a avisar al número de teléfono ${telefonoUsuario}`);
@@ -234,7 +234,7 @@ const modificarTurno = (idUsuario) => {
         mensajeDespedida();
         return;
     }
-    idTurno = parseInt(idTurno);
+    idTurno = parseInt(idTurno) - 1; // Resta 1 para ajustar el índice
     const turno = turnos.find(turno => turno.id === idTurno);
     if (turno) {
         nuevaFecha = prompt("📅 Ingresá la nueva fecha (dd/mm/aaaa): 📅");
@@ -270,7 +270,7 @@ const eliminarTurno = (idUsuario) => {
         alert("Cancelaste la eliminación del turno, volvemos al menú");
         return;
     }
-    idTurno = parseInt(idTurno);
+    idTurno = parseInt(idTurno) - 1; // Resta 1 para ajustar el índice
     const index = turnos.findIndex(turno => turno.id === idTurno);
     if (index !== -1) { //if not true
         turnos.splice(index, 1);
