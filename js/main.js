@@ -30,7 +30,7 @@ const generarID = () => idCounter++;
 
 // Bienvenida e ingreso de datos. Se llama del bucle de control de todo el programa.
 function ingresarDatosUsuario() { //Funcion declarativa
-    
+
     nombreUsuario = prompt("🐶 ¡Bienvenido a la Veterinaria Pata-pata-gonica! 🐱\n👤 Hola, ¿cómo te llamás? 👤:");
     if (nombreUsuario === null) {
         mensajeDespedida();
@@ -53,22 +53,26 @@ function ingresarDatosUsuario() { //Funcion declarativa
 
 // Ingreso de datos de las mascotas y sus turnos
 const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
-    
-    const cantidadNuevaMascotas = parseInt(prompt("🐾 ¿Cuántas mascotas querés traer a la veterinaria? 🐾"));
-    if (isNaN(cantidadNuevaMascotas)) {
-        alert("😊 por favor usá un número válido de mascotas 😊");
-        return;
+
+    const cantidadNuevaMascotas = prompt("🐾 ¿Cuántas mascotas querés traer a la veterinaria? 🐾");
+    if (cantidadNuevaMascotas === null) {
+        mensajeDespedida();
+        return false; // Cambiado a false para detener el programa
     }
-    for (let i = 0; i < cantidadNuevaMascotas; i++) {//Primer for
+    if (isNaN(parseInt(cantidadNuevaMascotas))) {
+        alert("😊 por favor usá un número válido de mascotas 😊");
+        return true; // Continua con el menú
+    }
+    for (let i = 0; i < parseInt(cantidadNuevaMascotas); i++) {//Primer for
         nombreMascota = prompt(`🐕 ¿Cómo se llama la mascota ${i + 1}? 🐕:`);
         if (nombreMascota === null) {
             mensajeDespedida();
-            return;
+            return false; // Cambiado a false para detener el programa
         }
         edadMascota = prompt(`📅 ¿Qué edad tiene ${nombreMascota} ? 📅:`);
         if (edadMascota === null) {
             mensajeDespedida();
-            return;
+            return false; // Cambiado a false para detener el programa
         }
         const mascota = { //Objeto literal
             id: generarID(),
@@ -82,17 +86,17 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
         fechaTurno = prompt(`📅 Fecha del turno para ${nombreMascota} (dd/mm/aaaa) 📅`);
         if (fechaTurno === null) {
             mensajeDespedida();
-            return;
+            return false; // Cambiado a false para detener el programa
         }
         horaTurno = prompt(`🕒 Hora del turno para ${nombreMascota} (HH:MM) 🕒`);
         if (horaTurno === null) {
             mensajeDespedida();
-            return;
+            return false; // Cambiado a false para detener el programa
         }
         servicio = elegirServicio(nombreMascota);
         if (servicio === null) {
             mensajeDespedida();
-            return;
+            return false; // Cambiado a false para detener el programa
         }
 
         const turno = {
@@ -104,6 +108,7 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
         };
         turnos.push(turno);
     }
+    return true; // Continua con el menú si se completó exitosamente
 };
 
 // Elije el servicio el usuario
@@ -112,6 +117,7 @@ const elegirServicio = (nombreMascota) => {
     while (servicioElegido === null) { //Primer while
         const opcionServicio = prompt(`¿Qué servicio deseás para ${nombreMascota}?\n1. 🛁Baño y Peinado\n2. 💉Vacunación\n3. 🪲Eliminación de Pulgas\nElige una opción:`);
         if (opcionServicio === null) {
+            mensajeDespedida();
             return null;
         }
         switch (opcionServicio) {
@@ -150,8 +156,7 @@ const mostrarMenu = (idUsuario) => {
 
     switch (opcion) {
         case '1':
-            ingresoDatosMascotasYTurnos(idUsuario);
-            break;
+            return ingresoDatosMascotasYTurnos(idUsuario);
         case '2':
             mostrarMascotas(idUsuario);
             break;
@@ -174,19 +179,14 @@ const mostrarMenu = (idUsuario) => {
     return true;
 };
 
-
-
 // Mascotas del usuario
 const mostrarMascotas = (idUsuario) => {
-
-
     const mascotasUsuario = [];//Mascotas por ID usuario actual
     for (const mascota of mascotas) {
         if (mascota.idUsuario === idUsuario) {
             mascotasUsuario.push(mascota);
         }
     }
-
 
     let datosAMostrar = '';
     for (let i = 0; i < mascotasUsuario.length; i++) {
@@ -197,7 +197,6 @@ const mostrarMascotas = (idUsuario) => {
         }
     }
     alert(`Los turnos a tu nombre son:\n ${datosAMostrar}`);
-    
 };
 
 // Turnos del usuario
@@ -219,7 +218,6 @@ const mostrarTurnos = (idUsuario) => {
     }
 
     alert(`${nombreUsuario} los turnos a tu nombre son:\n ${datosAMostrar} y te vamos a avisar al número de teléfono ${telefonoUsuario}`);
-    
 };
 
 // Modificar un turno
@@ -279,10 +277,11 @@ const eliminarTurno = (idUsuario) => {
 // Inicio del programa - Ciclo del menú del usuario
 const idUsuario = ingresarDatosUsuario();
 if (idUsuario !== null) { //if not true
-    ingresoDatosMascotasYTurnos(idUsuario);
-
-    continuar = mostrarMenu(idUsuario);
-    while (continuar) {
-        continuar = mostrarMenu(idUsuario); //Si continuar true Mostrar Menú principal
+    const continuar = ingresoDatosMascotasYTurnos(idUsuario);
+    if (continuar) {
+        let seguir = mostrarMenu(idUsuario);
+        while (seguir) {
+            seguir = mostrarMenu(idUsuario); //Si continuar true Mostrar Menú principal
+        }
     }
 }
