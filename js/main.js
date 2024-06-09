@@ -1,5 +1,6 @@
 // Nombre del archivo: main.js
 // Alessio Aguirre Pimentel
+// v2
 
 // Inicialización constantes y arrays
 const usuarios = [];
