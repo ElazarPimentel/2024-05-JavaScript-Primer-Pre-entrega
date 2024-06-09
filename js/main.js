@@ -24,7 +24,7 @@ let nuevaHora = "";
 let nuevoServicio = "";
 
 // Función mensage despedida
-const mensajeDespedida = () => alert('🖐️ Gracias y hasta luego 🖐️'); // Función arrow. En una reciente capacitación nos dijeron que la gente ama emojies.
+const mensajeDespedida = () => alert('🖐️ Gracias y hasta luego 🖐️'); // Función arrow. En una reciente capacitación nos dijeron que la gente ama emojies. La agregué proque se repite mucho el mensaje. 
 
 // Función que genera ID's unívocos
 const generarID = () => idCounter++;
@@ -58,7 +58,7 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
     const cantidadNuevaMascotas = prompt("🐾 ¿Cuántas mascotas querés traer a la veterinaria? 🐾");
     if (cantidadNuevaMascotas === null) {
         mensajeDespedida();
-        return false; // Cambiado a false para detener el programa
+        return false; // Cambiado a false para detener el programa proque seguía de largo. 
     }
     if (isNaN(parseInt(cantidadNuevaMascotas))) {
         alert("😊 por favor usá un número válido de mascotas 😊");
@@ -68,14 +68,14 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
         nombreMascota = prompt(`🐕 ¿Cómo se llama la mascota ${i + 1}? 🐕:`);
         if (nombreMascota === null) {
             mensajeDespedida();
-            return false; // Cambiado a false para detener el programa
+            return false; // 
         }
         edadMascota = prompt(`📅 ¿Qué edad tiene ${nombreMascota} ? 📅:`);
         if (edadMascota === null) {
             mensajeDespedida();
-            return false; // Cambiado a false para detener el programa
+            return false; // 
         }
-        const mascota = { //Objeto literal
+        const mascota = { //Objeto literal como en los vídeos de la plataforma
             id: generarID(),
             idUsuario,
             nombreMascota,
@@ -83,21 +83,21 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
         };
         mascotas.push(mascota);
 
-        // Solicitar turno y servicio para la mascota
+        // Turno y servicio para la mascota
         fechaTurno = prompt(`📅 Fecha del turno para ${nombreMascota} (dd/mm/aaaa) 📅`);
         if (fechaTurno === null) {
             mensajeDespedida();
-            return false; // Cambiado a false para detener el programa
+            return false;
         }
         horaTurno = prompt(`🕒 Hora del turno para ${nombreMascota} (HH:MM) 🕒`);
         if (horaTurno === null) {
             mensajeDespedida();
-            return false; // Cambiado a false para detener el programa
+            return false;
         }
         servicio = elegirServicio(nombreMascota);
         if (servicio === null) {
             mensajeDespedida();
-            return false; // Cambiado a false para detener el programa
+            return false;
         }
 
         const turno = {
@@ -109,10 +109,10 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
         };
         turnos.push(turno);
     }
-    return true; // Continua con el menú si se completó exitosamente
+    return true;
 };
 
-// Elije el servicio el usuario
+// Selección de ervicio
 const elegirServicio = (nombreMascota) => {
     let servicioElegido = null;
     while (servicioElegido === null) { //Primer while
@@ -121,7 +121,7 @@ const elegirServicio = (nombreMascota) => {
             mensajeDespedida();
             return null;
         }
-        switch (opcionServicio) {
+        switch (opcionServicio) { //Uso de switch
             case '1':
                 servicioElegido = servicios[0];
                 break;
@@ -132,7 +132,7 @@ const elegirServicio = (nombreMascota) => {
                 servicioElegido = servicios[2];
                 break;
             default:
-                alert('😊 Tenés que poner 1, 2 o 3 😊');
+                alert('😊 Tenés que poner 1, 2 o 3 😊'); //Validación rudimentaria, para segunda entrega se validará al nivel del curso. 
         }
     }
     return servicioElegido;
@@ -192,7 +192,7 @@ const mostrarMascotas = (idUsuario) => {
     let datosAMostrar = '';
     for (let i = 0; i < mascotasUsuario.length; i++) {
         const mascotaDelUsuario = mascotasUsuario[i];
-        const turno = turnos.find(turno => turno.idMascota === mascotaDelUsuario.id) || {};
+        const turno = turnos.find(turno => turno.idMascota === mascotaDelUsuario.id) || {}; // Callback del vídeo Premium del curso para evitar
         if (turno.fechaTurno) {
             datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés un turno el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
         }
@@ -205,7 +205,7 @@ const mostrarTurnos = (idUsuario) => {
     const turnosUsuario = [];
 
     for (const turno of turnos) {//Find turnos mascotas ID Usuario
-        const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota);
+        const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota); // Viva los callbacks
         if (mascotaDelUsuario && mascotaDelUsuario.idUsuario === idUsuario) {
             turnosUsuario.push(turno);
         }
@@ -214,7 +214,7 @@ const mostrarTurnos = (idUsuario) => {
     let datosAMostrar = '';
     for (let i = 0; i < turnosUsuario.length; i++) {
         const turno = turnosUsuario[i];
-        const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota);
+        const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota); // Viva los callbacks
         datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés el turno número *${turno.id}* el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
     }
 
@@ -230,7 +230,7 @@ const modificarTurno = (idUsuario) => {
         return;
     }
     idTurno = parseInt(idTurno);
-    const turno = turnos.find(turno => turno.id === idTurno);
+    const turno = turnos.find(turno => turno.id === idTurno); // Viva los callbacks
     if (turno) {
         nuevaFecha = prompt("📅 Ingresá la nueva fecha (dd/mm/aaaa): 📅");
         if (nuevaFecha === null) {
@@ -266,7 +266,7 @@ const eliminarTurno = (idUsuario) => {
         return;
     }
     idTurno = parseInt(idTurno);
-    const index = turnos.findIndex(turno => turno.id === idTurno);
+    const index = turnos.findIndex(turno => turno.id === idTurno); // Viva los callbacks
     if (index !== -1) { //if not true
         turnos.splice(index, 1);
         alert("🗑️ Tu turno fue eliminado con éxito 🗑️");
