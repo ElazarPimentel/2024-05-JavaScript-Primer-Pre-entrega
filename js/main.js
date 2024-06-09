@@ -1,36 +1,41 @@
 // Nombre del archivo: main.js
 // Alessio Aguirre Pimentel
-// v2
+// v4
 
-// Inicialización constantes y arrays
-const usuarios = [];
-const mascotas = [];
-const turnos = [];
+// Inicialización de arrays vacíos
+const usuarios = [],
+    mascotas = [],
+    turnos = [];
+
+// Inicialización de arrays con valores
 const servicios = ["Baño y Peinado", "Vacunación", "Eliminación de Pulgas"]; // Primer array
 
-// Inicialización de variables
-let idCounter = 0; //Primer variable numérica
-let servicio = ""; // Primer variable string
-let nombreUsuario = "";
-let telefonoUsuario = "";
-let nombreMascota = "";
-let edadMascota = "";
-let fechaTurno = "";
-let horaTurno = "";
-let opcion = "";
-let idTurno = "";
-let nuevaFecha = "";
-let nuevaHora = "";
-let nuevoServicio = "";
+// Inicialización de variables numéricas
+let idCounter = 0, // Primer variable numérica
+    idTurnoCounter = 0; // Contador para IDs de turnos
 
-// Función mensage despedida
-const mensajeDespedida = () => alert('🖐️ Gracias y hasta luego 🖐️'); // Función arrow. En una reciente capacitación nos dijeron que la gente ama emojies. La agregué proque se repite mucho el mensaje. 
+// Inicialización de variables de texto
+let servicio = "", // Primer variable string
+    nombreUsuario = "",
+    telefonoUsuario = "",
+    nombreMascota = "",
+    edadMascota = "",
+    fechaTurno = "",
+    horaTurno = "",
+    opcion = "",
+    nuevaFecha = "",
+    nuevaHora = "",
+    nuevoServicio = "";
+
+// Función mensaje despedida
+const mensajeDespedida = () => alert('🖐️ Gracias y hasta luego 🖐️'); // Función arrow. En una reciente capacitación nos dijeron que la gente ama emojis. La agregué porque se repite mucho el mensaje.
 
 // Función que genera ID's unívocos
-const generarID = () => idCounter++;
+const generarID = () => idCounter++; //IDs general
+const generarTurnoID = () => idTurnoCounter++; // ID de turnos para que sean consecutivos (antes usaba generarID para todo)
 
-// Bienvenida e ingreso de datos. Se llama del bucle de control de todo el programa.
-function ingresarDatosUsuario() { //Funcion declarativa
+// Bienvenida e ingreso de datos. Se llama del bucle de control de todo el programa al final del código.
+function ingresarDatosUsuario() { //Función declarativa
 
     nombreUsuario = prompt("🐶 ¡Bienvenido a la Veterinaria Pata-pata-gonica! 🐱\n👤 Hola, ¿cómo te llamás? 👤:");
     if (nombreUsuario === null) {
@@ -47,7 +52,7 @@ function ingresarDatosUsuario() { //Funcion declarativa
         nombreUsuario,
         telefonoUsuario
     };
-    usuarios.push(usuario);// Primer push
+    usuarios.push(usuario); // Primer push
 
     return usuario.id;
 }
@@ -58,22 +63,22 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
     const cantidadNuevaMascotas = prompt("🐾 ¿Cuántas mascotas querés traer a la veterinaria? 🐾");
     if (cantidadNuevaMascotas === null) {
         mensajeDespedida();
-        return false; // Cambiado a false para detener el programa proque seguía de largo. 
+        return false; // Cambiado a false para detener el programa porque seguía de largo.
     }
     if (isNaN(parseInt(cantidadNuevaMascotas))) {
         alert("😊 por favor usá un número válido de mascotas 😊");
         return true; // Continua con el menú
     }
-    for (let i = 0; i < parseInt(cantidadNuevaMascotas); i++) {//Primer for
+    for (let i = 0; i < parseInt(cantidadNuevaMascotas); i++) { //Primer for
         nombreMascota = prompt(`🐕 ¿Cómo se llama la mascota ${i + 1}? 🐕:`);
         if (nombreMascota === null) {
             mensajeDespedida();
-            return false; // 
+            return false;
         }
         edadMascota = prompt(`📅 ¿Qué edad tiene ${nombreMascota} ? 📅:`);
         if (edadMascota === null) {
             mensajeDespedida();
-            return false; // 
+            return false;
         }
         const mascota = { //Objeto literal como en los vídeos de la plataforma
             id: generarID(),
@@ -101,7 +106,7 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
         }
 
         const turno = {
-            id: generarID(),
+            id: generarTurnoID(), // Usar nueva función para ID de turnos 
             idMascota: mascota.id,
             fechaTurno,
             horaTurno,
@@ -112,7 +117,7 @@ const ingresoDatosMascotasYTurnos = (idUsuario) => { //Función anónima
     return true;
 };
 
-// Selección de ervicio
+// Selección de servicio
 const elegirServicio = (nombreMascota) => {
     let servicioElegido = null;
     while (servicioElegido === null) { //Primer while
@@ -132,7 +137,7 @@ const elegirServicio = (nombreMascota) => {
                 servicioElegido = servicios[2];
                 break;
             default:
-                alert('😊 Tenés que poner 1, 2 o 3 😊'); //Validación rudimentaria, para segunda entrega se validará al nivel del curso. 
+                alert('😊 Tenés que poner 1, 2 o 3 😊'); //Validación rudimentaria, para segunda entrega se validará al nivel del curso.
         }
     }
     return servicioElegido;
@@ -157,7 +162,7 @@ const mostrarMenu = (idUsuario) => {
 
     switch (opcion) {
         case '1':
-            return ingresoDatosMascotasYTurnos(idUsuario);
+            return ingresoDatosMascotasYTurnos(idUsuario); // callbacks de vídeo Premium de la plataforma, lo uso en todo el código, ahorra mucho código
         case '2':
             mostrarMascotas(idUsuario);
             break;
@@ -182,7 +187,7 @@ const mostrarMenu = (idUsuario) => {
 
 // Mascotas del usuario
 const mostrarMascotas = (idUsuario) => {
-    const mascotasUsuario = [];//Mascotas por ID usuario actual
+    const mascotasUsuario = []; //Mascotas por ID usuario actual
     for (const mascota of mascotas) {
         if (mascota.idUsuario === idUsuario) {
             mascotasUsuario.push(mascota);
@@ -192,7 +197,7 @@ const mostrarMascotas = (idUsuario) => {
     let datosAMostrar = '';
     for (let i = 0; i < mascotasUsuario.length; i++) {
         const mascotaDelUsuario = mascotasUsuario[i];
-        const turno = turnos.find(turno => turno.idMascota === mascotaDelUsuario.id) || {}; // Callback del vídeo Premium del curso para evitar
+        const turno = turnos.find(turno => turno.idMascota === mascotaDelUsuario.id) || {}; // || {} para resolver que no quede el objeto vacío por error undefined se usa falsy y s
         if (turno.fechaTurno) {
             datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés un turno el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
         }
@@ -204,8 +209,8 @@ const mostrarMascotas = (idUsuario) => {
 const mostrarTurnos = (idUsuario) => {
     const turnosUsuario = [];
 
-    for (const turno of turnos) {//Find turnos mascotas ID Usuario
-        const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota); // Viva los callbacks
+    for (const turno of turnos) { //Find turnos mascotas ID Usuario
+        const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota);
         if (mascotaDelUsuario && mascotaDelUsuario.idUsuario === idUsuario) {
             turnosUsuario.push(turno);
         }
@@ -214,7 +219,7 @@ const mostrarTurnos = (idUsuario) => {
     let datosAMostrar = '';
     for (let i = 0; i < turnosUsuario.length; i++) {
         const turno = turnosUsuario[i];
-        const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota); // Viva los callbacks
+        const mascotaDelUsuario = mascotas.find(mascotaDelUsuario => mascotaDelUsuario.id === turno.idMascota);
         datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés el turno número *${turno.id}* el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
     }
 
@@ -230,7 +235,7 @@ const modificarTurno = (idUsuario) => {
         return;
     }
     idTurno = parseInt(idTurno);
-    const turno = turnos.find(turno => turno.id === idTurno); // Viva los callbacks
+    const turno = turnos.find(turno => turno.id === idTurno);
     if (turno) {
         nuevaFecha = prompt("📅 Ingresá la nueva fecha (dd/mm/aaaa): 📅");
         if (nuevaFecha === null) {
@@ -266,7 +271,7 @@ const eliminarTurno = (idUsuario) => {
         return;
     }
     idTurno = parseInt(idTurno);
-    const index = turnos.findIndex(turno => turno.id === idTurno); // Viva los callbacks
+    const index = turnos.findIndex(turno => turno.id === idTurno);
     if (index !== -1) { //if not true
         turnos.splice(index, 1);
         alert("🗑️ Tu turno fue eliminado con éxito 🗑️");
