@@ -202,7 +202,7 @@ const mostrarMascotas = (idUsuario) => {
         const mascotaDelUsuario = mascotasUsuario[i];
         const turno = turnos.find(turno => turno.idMascota === mascotaDelUsuario.id) || {}; // || {} para resolver que no quede el objeto vacío por error undefined se usa falsy 
         if (turno.fechaTurno) {
-            datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés un turno el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n`;
+            datosAMostrar += `Para ${mascotaDelUsuario.nombreMascota} tenés un turno el ${turno.fechaTurno} a las ${turno.horaTurno} para ${turno.servicio}\n Te vamos a avisar al número de teléfono ${telefonoUsuario}`;
         }
     }
     alert(`Los turnos a tu nombre son:\n ${datosAMostrar}`);
@@ -268,7 +268,7 @@ const modificarTurno = (idUsuario) => {
 // Eliminar un turno
 const eliminarTurno = (idUsuario) => {
     mostrarTurnos(idUsuario);
-    let idTurno = prompt('🗑️ Ingresá número del turno que querés eliminar: 🗑️'); 
+    let idTurno = prompt('🗑️ Ingresá número del turno que querés eliminar: 🗑️');
     if (idTurno === null) {
         alert('Cancelaste la eliminación del turno, volvemos al menú');
         return;
