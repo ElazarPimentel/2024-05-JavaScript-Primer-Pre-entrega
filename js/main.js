@@ -1,6 +1,6 @@
 // Nombre del archivo: main.js
 // Alessio Aguirre Pimentel
-// v
+// v 8
 
 // Inicialización  arrays vacíos
 const usuarios = [],
@@ -232,7 +232,7 @@ const mostrarTurnos = (idUsuario) => {
 // Modificar un turno
 const modificarTurno = (idUsuario) => {
     mostrarTurnos(idUsuario);
-    idTurno = prompt('📝 Ingresá número de turno que querés modificar: 📝');
+    let idTurno = prompt('📝 Ingresá número de turno que querés modificar: 📝'); // Modificado: idTurno se quejaba que no estaba inicializado
     if (idTurno === null) {
         mensajeDespedida();
         return;
@@ -268,7 +268,7 @@ const modificarTurno = (idUsuario) => {
 // Eliminar un turno
 const eliminarTurno = (idUsuario) => {
     mostrarTurnos(idUsuario);
-    idTurno = prompt('🗑️ Ingresá número del turno que querés eliminar: 🗑️');
+    let idTurno = prompt('🗑️ Ingresá número del turno que querés eliminar: 🗑️'); 
     if (idTurno === null) {
         alert('Cancelaste la eliminación del turno, volvemos al menú');
         return;
@@ -282,6 +282,7 @@ const eliminarTurno = (idUsuario) => {
         alert('😊 Oops! hubo un error en el número de turno que ingresaste no fue encontrado 😊');
     }
 };
+
 
 // Inicio del programa - Ciclo del menú del usuario
 const idUsuario = ingresarDatosUsuario();
