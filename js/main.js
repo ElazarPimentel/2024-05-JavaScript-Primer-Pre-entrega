@@ -1,6 +1,6 @@
 // Nombre del archivo: main.js
 // Alessio Aguirre Pimentel
-// v 8
+// v9
 
 // Inicialización  arrays vacíos
 const usuarios = [],
